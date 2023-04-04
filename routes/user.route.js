@@ -5,8 +5,15 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { authenticate } = require("../middleware/authenticate.middleware");
 
-userRouter.get("/", (req, res) => {
-  res.send("User");
+userRouter.get("/", async(req, res) => {
+try{
+  let users = await UserModel.find();
+
+  res.send(users)
+}catch(err){
+  console.log(err)
+  res.send({"msg":"Something went wrong"})
+}
 });
 
 userRouter.post("/register", (req, res) => {
